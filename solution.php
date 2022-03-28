@@ -76,7 +76,7 @@ if ($mode == 'stream') {
     $input   = Util::read($filename);
     $outputs = $processor->processStream($input);
 
-    echo 'Acumulative count:' . PHP_EOL;
+    echo 'Accumulative count:' . PHP_EOL;
     foreach ($outputs as $output) {
         echo '----' . PHP_EOL;
         foreach ($output as $line => $count)

@@ -18,7 +18,7 @@ class Processor {
      *  @param ?(callable (string): string) $decorator
      *  @param ?(callable (string): bool)   $filter
      */
-    public function __construct ($decorator = null, $filter = null) {
+    public function __construct (?callable $decorator = null, ?callable $filter = null) {
         $this->decorator = $decorator ?? fn (string $x): string => $x;
         $this->filter    = $filter    ?? fn (string $_): bool   => true;
     }
