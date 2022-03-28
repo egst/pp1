@@ -95,3 +95,55 @@ Feel free to add yours favorite, thanks.
 ### Tools
 - https://github.com/phpstan/phpstan (can spot a "bugs" in modern PHP code)
 - https://github.com/FriendsOfPHP/PHP-CS-Fixer
+
+### Řešení
+
+Řešení je spustitelné následujícím způsobem:
+
+```sh
+php solution.php INPUT [stream]
+```
+
+Prvním parametrem je cesta ke vstupnímu souboru. *Čtení ze standardního vstupu není implementováno.*
+Druhým, volitelným parametrem je řetězec `stream`, který umožní práci s potenciálně nekonečným vstupem.
+Bez parametru `stream` program přečte celý vstupní soubor a vrátí komplení výsledný výstup.
+S parametrem `stream` program očekává přidání nových řádků ke vstupnímu souboru
+a při každé takové skutečnosti vypíše nový akumulovaný výsledný výstup.
+*Funguje tedy na způsob `tail --follow`.*
+
+Soubor `solution.php` využívá obecnou implementaci z adresáře `solution/`
+a demonstruje příklady možných konfigurací třídy `\Solution\Processor`
+a využití pomocných utilit z třídy `\Solution\Util`.
+*Nakonec vypíše výsledek stejným způsobem, jak tomu bylo v příkladu `old.php`,
+tedu tuto část jsem nijak nemodernizoval.*
+
+Konfigurace třídy `Processor` je modelována dvěma funkcemi `$decorator` a `$filter`.
+Případ žádného dokorátoru resp. filtru se modeluje identitou resp. konstantní funkcí vracející `true`.
+Případ několika dekorátorů se modeluje skládáním funkcí.
+Případ několika filtrů se modeluje konjunkcí nebo disjunkcí daných predikátů na vstupech.
+Jako výchozí je zvolena varianta konjunkce filtrů.
+Konstruktor umožňuje jen vynechání dekorátoru nebo filteru,
+ale pro komplexnější interface je určena statická medoda `make`,
+která navíc příjme pole dekorátorů nebo filtrů. Na filterech provede konjunkci.
+*Metoda `make` je však omezena na `Closure` (nebere obecné `callable`)
+kvůli nejednoznačnosti callable polí.*
+Pro manuální skládání dekorátorů a filterů jsou k dispozici statické metody
+`Util::seq`, `Util::and` a `Util::or`.
+
+Pro spuštění výpočtu na daném vstupu jsou metody `process` a `processStream`.
+Obě příjmou iterable řetězců (každý řetězec reprezentuje řádek vstupu).
+Zpracování vstupu na iterable objekt zařídí volající.
+Lze k tomu použít pomocnou statickou metodu `Util::read`, která
+je schopna zpracovat celý soubor po řádcích a případně čekat na přidání nových řádků.
+Metoda `process` zpracuje konečný počet řádků a vrátí jeden výsledek,
+zatímco metoda `processStream` vrací generátor,
+který postupně vydává výsledky po zpracování každého řádku.
+Výsledek je reprezentován asociativním polem,
+kde klíče odpovídají řádkům a hodnoty jejich četnosti.
+
+Využívám standardní Composer autoloader nastavený v `composer.json`.
+V kódu využívám některých konstruktů z php 8.1 (např. syntaxi `f(...)`).
+S PHPStanem jsem zatím nepracoval, ale místo něj
+používám statický analyzátor Psalm (konfigurovaný v `psalm.xml`)
+a některé dock-block anotace odpovídají právě jeho specifickým typům
+(např. `array<string, int>`, `callable (string): string`).

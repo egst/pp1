@@ -1,5 +1,11 @@
 {
     "require-dev": {
-        "monolog/monolog": "^1.23"
+        "monolog/monolog": "^1.23",
+        "vimeo/psalm": "master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Solution\\": "solution"
+        }
     }
 }
