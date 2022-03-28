@@ -101,7 +101,7 @@ class Util {
      */
     private static function release (&$handle, string $filename, int $delay): void {
         $offset = ftell($handle);
-        if (!$offset)
+        if ($offset === false)
             throw new RuntimeException("An internal error occurred while releasing a resource.");
         fclose($handle);
         usleep($delay * 1000);
