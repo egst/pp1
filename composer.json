@@ -1,4 +1,7 @@
 {
+    "require": {
+        "php": ">=8.1.0"
+    },
     "require-dev": {
         "monolog/monolog": "^1.23",
         "vimeo/psalm": "master"
