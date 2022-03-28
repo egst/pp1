@@ -115,7 +115,7 @@ Soubor `solution.php` využívá obecnou implementaci z adresáře `solution/`
 a demonstruje příklady možných konfigurací třídy `\Solution\Processor`
 a využití pomocných utilit z třídy `\Solution\Util`.
 *Nakonec vypíše výsledek stejným způsobem, jak tomu bylo v příkladu `old.php`,
-tedu tuto část jsem nijak nemodernizoval.*
+tedy tuto část jsem nijak nemodernizoval.*
 
 Konfigurace třídy `Processor` je modelována dvěma funkcemi `$decorator` a `$filter`.
 Případ žádného dokorátoru resp. filtru se modeluje identitou resp. konstantní funkcí vracející `true`.
@@ -139,7 +139,7 @@ Metoda `process` zpracuje konečný počet řádků a vrátí jeden výsledek,
 zatímco metoda `processStream` vrací generátor,
 který postupně vydává výsledky po zpracování každého řádku.
 Výsledek je reprezentován asociativním polem,
-kde klíče odpovídají řádkům a hodnoty jejich četnosti.
+kde klíče odpovídají řádkům a hodnoty jejich četnostem.
 
 Využívám standardní Composer autoloader nastavený v `composer.json`.
 V kódu využívám některých konstruktů z php 8.1 (např. syntaxi `f(...)`).
